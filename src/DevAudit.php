@@ -1,5 +1,5 @@
 <?php
 
-namespace jamesclark32\DevAudit;
+namespace JamesClark32\DevAudit;
 
 class DevAudit {}

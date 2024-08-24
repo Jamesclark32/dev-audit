@@ -2,7 +2,7 @@
     "name": "jamesclark32/dev-audit",
     "description": "This is my package dev-audit",
     "keywords": [
-        "James Clark",
+        "jamesclark32",
         "laravel",
         "dev-audit"
     ],
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "jamesclark32\\DevAudit\\": "src/",
-            "jamesclark32\\DevAudit\\Database\\Factories\\": "database/factories/"
+            "JamesClark32\\DevAudit\\": "src/",
+            "JamesClark32\\DevAudit\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "jamesclark32\\DevAudit\\Tests\\": "tests/",
+            "JamesClark32\\DevAudit\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -73,10 +73,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "jamesclark32\\DevAudit\\DevAuditServiceProvider"
+                "JamesClark32\\DevAudit\\DevAuditServiceProvider"
             ],
             "aliases": {
-                "DevAudit": "jamesclark32\\DevAudit\\Facades\\DevAudit"
+                "DevAudit": "JamesClark32\\DevAudit\\Facades\\DevAudit"
             }
         }
     },
