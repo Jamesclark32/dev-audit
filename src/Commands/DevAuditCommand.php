@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace jamesclark32\DevAudit\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class DevAuditCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'dev-audit';
 
     public $description = 'My command';
 

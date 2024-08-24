@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace jamesclark32\DevAudit;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use jamesclark32\DevAudit\Commands\DevAuditCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class DevAuditServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('dev-audit')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_dev_audit_table')
+            ->hasCommand(DevAuditCommand::class);
     }
 }
