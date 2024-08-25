@@ -27,8 +27,10 @@ Typical output looks something like this:
 
 To get started, you need only to install the package via composer:
 
+It is recommended to only require the package for development.
+
 ```bash
-composer require jamesclark32/dev-audit
+composer require --dev jamesclark32/dev-audit
 ```
 
 Once installed, Dev Audit can be run at any time using `artisan dev:audit`.
