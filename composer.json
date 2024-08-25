@@ -1,6 +1,6 @@
 {
     "name": "jamesclark32/dev-audit",
-    "description": "This is my package dev-audit",
+    "description": "Quickly run a set of CLI commands and summarize their outcome",
     "keywords": [
         "jamesclark32",
         "laravel",
@@ -35,8 +35,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JamesClark32\\DevAudit\\": "src/",
-            "JamesClark32\\DevAudit\\Database\\Factories\\": "database/factories/"
+            "JamesClark32\\DevAudit\\": "src/"
         }
     },
     "autoload-dev": {

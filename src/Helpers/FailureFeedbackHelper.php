@@ -24,7 +24,8 @@ class FailureFeedbackHelper
         $terminal = new Terminal;
 
         $failure = PHP_EOL.str_repeat('─', $terminal->getWidth()).PHP_EOL;
-        $failure .= $outputFormatHelper->buildOutput($action->title, 'bright-white', ['bold']);
+        $failure .= $outputFormatHelper->buildInlineOutput($action->title, 'bright-white', ['bold']);
+        $failure .= $outputFormatHelper->buildOutput(' failure details', 'gray');
 
         foreach ([
             'Command' => $action->command,
@@ -35,18 +36,18 @@ class FailureFeedbackHelper
             $failure .= $this->buildSection($title, $value, $outputFormatHelper);
         }
 
-        return $failure;
+        return $failure.PHP_EOL;
     }
 
     protected function buildSection(string $title, ?string $value, OutputFormatHelper $outputFormatHelper): string
     {
         $section = PHP_EOL;
-        $section .= $outputFormatHelper->buildOutput($title, 'yellow', ['bold', 'underscore']);
+        $section .= $outputFormatHelper->buildOutput($title, 'blue', ['bold', 'underscore']);
 
         if ($value) {
-            return $section.PHP_EOL.' '.$value.PHP_EOL;
+            return $section.PHP_EOL.$value.PHP_EOL.PHP_EOL;
         }
 
-        return $section.PHP_EOL.$outputFormatHelper->buildOutput('n/a', 'gray');
+        return $section.PHP_EOL.$outputFormatHelper->buildOutput('n/a', 'gray').PHP_EOL;
     }
 }

@@ -26,7 +26,7 @@ class ProgressBarHelper
 
     public function drawProgressBar(int $actionNumber, string $actionTitle, string $spinner, OutputFormatHelper $outputFormatHelper): string
     {
-        $progressBarOutput = $outputFormatHelper->buildInlineOutput("$spinner $actionNumber/$this->totalCount", 'bright-yellow');
+        $progressBarOutput = $outputFormatHelper->buildInlineOutput("$spinner running audit $actionNumber/$this->totalCount", 'bright-blue');
         $progressBarOutput .= $outputFormatHelper->buildOutput(" $actionTitle", 'bright-white');
 
         return $progressBarOutput;
@@ -35,6 +35,6 @@ class ProgressBarHelper
     public function drawCompleted(OutputFormatHelper $outputFormatHelper): void
     {
         $this->section->clear();
-        $this->section->overwrite($outputFormatHelper->buildOutput(".... All $this->totalCount completed.", 'bright-white'));
+        $this->section->overwrite($outputFormatHelper->buildOutput(".... All $this->totalCount audits completed", 'blue'));
     }
 }

@@ -29,6 +29,8 @@ class DevAuditCommand extends Command
 
     private array $audits = [];
 
+    private bool $hasUi = false;
+
     public function __construct(ProgressBarHelper $progressBarHelper, SpinnerHelper $spinner, TableHelper $tableHelper, FailureFeedbackHelper $failureFeedbackHelper, OutputFormatHelper $outputFormatHelper)
     {
         $this->progressBarHelper = $progressBarHelper;
@@ -53,16 +55,22 @@ class DevAuditCommand extends Command
         $outputInterface = $this->output->getOutput();
 
         if (method_exists($outputInterface, 'section')) {
-            $tableSection = $this->output->getOutput()->section();
-            $progressBarSection = $this->output->getOutput()->section();
-        }
 
-        $this->tableHelper->buildTable($tableSection, $this->audits);
-        $this->progressBarHelper->buildProgressBar($progressBarSection, $this->audits, $this->outputFormatHelper);
+            $output = $this->output->getOutput();
+            if (method_exists($output, 'section')) {
+                $this->hasUi = true;
+                $tableSection = $output->section();
+                $progressBarSection = $output->section();
+                $this->tableHelper->buildTable($tableSection, $this->audits);
+                $this->progressBarHelper->buildProgressBar($progressBarSection, $this->audits, $this->outputFormatHelper);
+            }
+        }
 
         $this->processActions();
 
-        $this->progressBarHelper->drawCompleted($this->outputFormatHelper);
+        if ($this->hasUi) {
+            $this->progressBarHelper->drawCompleted($this->outputFormatHelper);
+        }
 
         $this->output->write($this->failureFeedbackHelper->buildFailures($this->audits, $this->outputFormatHelper));
 
@@ -87,7 +95,9 @@ class DevAuditCommand extends Command
     protected function processAction(AuditModel $action, int $count): void
     {
         $action->isRunning = true;
-        $this->tableHelper->redrawTable($this->audits);
+        if ($this->hasUi) {
+            $this->tableHelper->redrawTable($this->audits);
+        }
 
         $process = $this->executeAction($action, $count);
 
@@ -96,7 +106,10 @@ class DevAuditCommand extends Command
         $action->hadErrors = ! $process->isSuccessful();
         $action->output = $process->getOutput();
         $action->errorOutput = $process->getErrorOutput();
-        $this->tableHelper->redrawTable($this->audits);
+
+        if ($this->hasUi) {
+            $this->tableHelper->redrawTable($this->audits);
+        }
     }
 
     protected function executeAction(AuditModel $action, int $count): Process
@@ -104,9 +117,11 @@ class DevAuditCommand extends Command
         $process = Process::fromShellCommandline($action->command, null, ['APP_ENV' => 'testing']);
         $process->start();
 
-        while ($process->isRunning()) {
-            $this->progressBarHelper->redrawProgressBar($count, $action->title, $this->spinner->spin(), $this->outputFormatHelper);
-            time_nanosleep(0, 250000000);
+        if ($this->hasUi) {
+            while ($process->isRunning()) {
+                $this->progressBarHelper->redrawProgressBar($count, $action->title, $this->spinner->spin(), $this->outputFormatHelper);
+                time_nanosleep(0, 250000000);
+            }
         }
 
         return $process;
