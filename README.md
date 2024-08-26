@@ -1,5 +1,10 @@
 # Dev Audit 
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/Jamesclark32/dev-audit.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/Jamesclark32/dev-audit/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/Jamesclark32/dev-audit/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/Jamesclark32/dev-audit.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+
 This package provides a Laravel console command to quickly run a set of CLI commands and summarize their outcome.
 
 Dev Audit is intended to encapsulate a series of audits regularly run together as part of a development process, such as a pre-merge routine.
