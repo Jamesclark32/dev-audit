@@ -13,7 +13,7 @@ use Symfony\Component\Process\Process;
 
 class DevAuditCommand extends Command
 {
-    protected $signature = 'dev:audit';
+    protected $signature = 'dev:audit {--lint}';
 
     protected $description = 'Executes audits against the code base';
 
@@ -53,6 +53,14 @@ class DevAuditCommand extends Command
     public function handle(): int
     {
         $outputInterface = $this->output->getOutput();
+
+        if ($this->option('lint') || config('dev-audit.settings.always_lint') === true) {
+            $this->line($this->outputFormatHelper->buildInlineOutput('Linters', 'bright-white', ['bold']));
+            $this->call('dev:lint');
+            $this->newLine();
+            $this->line($this->outputFormatHelper->buildInlineOutput('Audits', 'bright-white', ['bold']));
+
+        }
 
         if (method_exists($outputInterface, 'section')) {
 
