@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'settings' => [
+        'always_lint' => false,
+    ],
     'audits' => [
         [
             'title' => 'PHPUnit',
@@ -19,8 +22,8 @@ return [
         ],
         [
             'title' => 'Prettier (dirty files)',
-            'command' => 'npx prettier --config .prettierrc -u -l $(git diff --name-only --diff-filter=d HEAD  | xargs)',
-            'failure_hint' => 'Run "npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d HEAD  | xargs)" to have prettier fix these code style issues while remaining scoped to files with uncommited changes only.',
+            'command' => 'npx prettier --config .prettierrc -u -l $(git diff --name-only --diff-filter=d | xargs)',
+            'failure_hint' => 'Run "npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d HEAD | xargs)" to have prettier fix these code style issues while remaining scoped to files with uncommited changes only.',
         ],
         [
             'title' => 'Composer Audit',
@@ -29,6 +32,16 @@ return [
         [
             'title' => 'NPM Audit',
             'command' => 'npm audit',
+        ],
+    ],
+    'linters' => [
+        [
+            'title' => 'Pint (dirty files)',
+            'command' => './vendor/bin/pint --dirty',
+        ],
+        [
+            'title' => 'Prettier (dirty files)',
+            'command' => 'npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d | xargs)',
         ],
     ],
 ];

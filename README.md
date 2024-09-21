@@ -1,5 +1,10 @@
 # Dev Audit 
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/Jamesclark32/dev-audit.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/Jamesclark32/dev-audit/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/Jamesclark32/dev-audit/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/Jamesclark32/dev-audit.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+
 This package provides a Laravel console command to quickly run a set of CLI commands and summarize their outcome.
 
 Dev Audit is intended to encapsulate a series of audits regularly run together as part of a development process, such as a pre-merge routine.
@@ -15,6 +20,8 @@ Out of the box, Dev Audit runs:
 - Composer audit
 - Npm audit
 
+Note that this includes [phpstan](https://github.com/larastan/larastan) and [prettier](https://github.com/prettier/prettier) which require separate installation and configuration in a Laravel project.
+
 Once installed, Dev Audit can be run at any time using `artisan dev:audit`.
 
 Under the hood, Dev Audit executes the commands from the configuration via an instance of `Symfony/Process` and serves as a UI wrapper to summarize the results while removing feedback clutter.
@@ -22,6 +29,13 @@ Under the hood, Dev Audit executes the commands from the configuration via an in
 Typical output looks something like this:
 
 ![img.png](img.png)
+
+
+## Linters
+
+This package also contains a command, `dev:lint` to run linters. You can run this command at any time you choose. You can also run the linters as part of the audit by adding the `--lint` flag thusly: `php artisan dev:audit --lint`. 
+
+If you always want the linters to run as part of the audit process, you can get control this by setting settings.always_lint to true in the dev-audit configuration file.
 
 ## Installation
 
@@ -55,7 +69,10 @@ The default audit configuration looks like this:
 
 ```php
 return [
-     'audits' => [
+    'settings' => [
+        'always_lint' => false,
+    ],
+    'audits' => [
         [
             'title' => 'PHPUnit',
             'command' => './vendor/bin/phpunit -d memory_limit=-1 --no-progress --configuration phpunit.xml;',
@@ -73,8 +90,8 @@ return [
         ],
         [
             'title' => 'Prettier (dirty files)',
-            'command' => 'npx prettier --config .prettierrc -u -l $(git diff --name-only --diff-filter=d HEAD  | xargs)',
-            'failure_hint' => 'Run "npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d HEAD  | xargs)" to have prettier fix these code style issues while remaining scoped to files with uncommited changes only.',
+            'command' => 'npx prettier --config .prettierrc -u -l $(git diff --name-only --diff-filter=d | xargs)',
+            'failure_hint' => 'Run "npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d HEAD | xargs)" to have prettier fix these code style issues while remaining scoped to files with uncommited changes only.',
         ],
         [
             'title' => 'Composer Audit',
@@ -83,6 +100,16 @@ return [
         [
             'title' => 'NPM Audit',
             'command' => 'npm audit',
+        ],
+    ],
+    'linters' => [
+        [
+            'title' => 'Pint (dirty files)',
+            'command' => './vendor/bin/pint --dirty',
+        ],
+        [
+            'title' => 'Prettier (dirty files)',
+            'command' => 'npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d | xargs)',
         ],
     ],
 ];

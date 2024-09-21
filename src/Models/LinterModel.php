@@ -5,7 +5,7 @@ namespace JamesClark32\DevAudit\Models;
 use JamesClark32\DevAudit\Helpers\TableCellHelper;
 use JamesClark32\DevAudit\Helpers\TableRowHelper;
 
-class AuditModel extends Model
+class LinterModel extends Model
 {
     public string $title;
 
@@ -19,13 +19,13 @@ class AuditModel extends Model
 
     public string $errorOutput;
 
-    public ?string $failureHint;
-
     public bool $hadErrors = false;
 
     public bool $isRunning = false;
 
     public bool $hasCompleted = false;
+
+    public string $failureHint;
 
     private TableCellHelper $tableCellHelper;
 
@@ -44,9 +44,9 @@ class AuditModel extends Model
         } elseif ($this->isRunning === true && $this->hasCompleted === false) {
             $this->status = '➞ Active';
         } elseif ($this->hasCompleted === true && $this->hadErrors === false) {
-            $this->status = '✓ Passed';
+            $this->status = '✓   Done';
         } elseif ($this->hasCompleted === true && $this->hadErrors === true) {
-            $this->status = '☓ Failed';
+            $this->status = '☓  Error';
         }
     }
 
