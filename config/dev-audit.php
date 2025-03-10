@@ -6,8 +6,8 @@ return [
     ],
     'audits' => [
         [
-            'title' => 'PHPUnit',
-            'command' => './vendor/bin/phpunit -d memory_limit=-1 --no-progress --configuration phpunit.xml;',
+            'title' => 'Pest',
+            'command' => './vendor/bin/pest -d memory_limit=-1 --no-progress --configuration phpunit.xml;',
             'failure_hint' => 'Run tests using "php artisan test --stop-on-error" to help discover code issues in isolation.',
         ],
         [
@@ -32,6 +32,10 @@ return [
         [
             'title' => 'NPM Audit',
             'command' => 'npm audit',
+        ],
+        [
+            'title' => 'Peck',
+            'command' => './vendor/bin/peck',
         ],
     ],
     'linters' => [
