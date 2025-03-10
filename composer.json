@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "spatie/laravel-package-tools": "^1.19.0",
+        "spatie/laravel-package-tools": "^1.19.0"
     },
     "require-dev": {
         "laravel/pint": "^v1.21.0",
