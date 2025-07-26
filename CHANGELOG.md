@@ -10,7 +10,11 @@ Adjust default configuration by switching from phpunit to pest and adding peck
 
 Added dev:lint command along with --lint flag on dev:audit
 
-
 ## 1.0.0 - 2024-08-25
 
 Initial Release
+
+## 1.1.2 - 2025-07-26
+
+Adds support for .env.testing
+Updates default config
