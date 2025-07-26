@@ -128,7 +128,7 @@ class DevAuditCommand extends Command
         if (file_exists($envTestingPath)) {
             $lines = file($envTestingPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             foreach ($lines as $line) {
-                if (strpos($line, '=') !== false && !str_starts_with($line, '#')) {
+                if (strpos($line, '=') !== false && ! str_starts_with($line, '#')) {
                     [$key, $value] = explode('=', $line, 2);
                     $envVars[trim($key)] = trim($value);
                 }
