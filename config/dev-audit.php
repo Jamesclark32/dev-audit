@@ -6,24 +6,37 @@ return [
     ],
     'audits' => [
         [
-            'title' => 'Pest',
-            'command' => './vendor/bin/pest -d memory_limit=-1 --no-progress --configuration phpunit.xml;',
-            'failure_hint' => 'Run tests using "php artisan test --stop-on-error" to help discover code issues in isolation.',
+            'title' => 'Tests',
+            'command' => './vendor/bin/pest',
         ],
         [
-            'title' => 'PHPStan',
+            'title' => 'Test coverage',
+            'command' => './vendor/bin/pest --coverage --min=80',
+        ],
+        [
+            'title' => 'Type coverage',
+            'command' => './vendor/bin/pest --type-coverage --min=100',
+        ],
+        [
+            'title' => 'PHPStan type check',
             'command' => './vendor/bin/phpstan analyze -v --memory-limit=-1',
-            'failure_hint' => 'Address the code issues found by "./vendor/bin/phpstan analyze -v --memory-limit=-1", or adjust phpstan.neon to allow for them.',
         ],
         [
-            'title' => 'Pint (dirty files)',
+            'title' => 'Pint PHP linting (dirty files only)',
             'command' => './vendor/bin/pint --dirty --test',
-            'failure_hint' => 'Run "./vendor/bin/pint --dirty" to have Pint fix these code style issues while remaining scoped to files with uncommited changes only.',
         ],
         [
-            'title' => 'Prettier (dirty files)',
-            'command' => 'npx prettier --config .prettierrc -u -l $(git diff --name-only --diff-filter=d | xargs)',
-            'failure_hint' => 'Run "npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d HEAD | xargs)" to have prettier fix these code style issues while remaining scoped to files with uncommited changes only.',
+            'title' => 'Prettier JS linting (dirty files only)',
+            'command' => 'npm run format:check:dirty',
+            'failure_hint' => 'Run "npm run format:check:dirty',
+        ],
+        [
+            'title' => 'Peck typo check',
+            'command' => './vendor/bin/peck',
+        ],
+        [
+            'title' => 'Rector code quality',
+            'command' => './vendor/bin/rector --dry-run',
         ],
         [
             'title' => 'Composer Audit',
@@ -33,19 +46,23 @@ return [
             'title' => 'NPM Audit',
             'command' => 'npm audit',
         ],
-        [
-            'title' => 'Peck',
-            'command' => './vendor/bin/peck',
-        ],
     ],
     'linters' => [
         [
-            'title' => 'Pint (dirty files)',
+            'title' => 'Pint (dirty files only)',
             'command' => './vendor/bin/pint --dirty',
         ],
         [
-            'title' => 'Prettier (dirty files)',
-            'command' => 'npx prettier --config .prettierrc -u -w $(git diff --name-only --diff-filter=d | xargs)',
+            'title' => 'Rector',
+            'command' => './vendor/bin/rector',
+        ],
+        [
+            'title' => 'Prettier (dirty files only)',
+            'command' => 'npm run format:dirty',
+        ],
+        [
+            'title' => 'ESX',
+            'command' => 'npm run lint',
         ],
     ],
 ];

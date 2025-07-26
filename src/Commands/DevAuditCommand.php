@@ -122,7 +122,22 @@ class DevAuditCommand extends Command
 
     protected function executeAction(AuditModel $action, int $count): Process
     {
-        $process = Process::fromShellCommandline($action->command, null, ['APP_ENV' => 'testing']);
+        $envVars = $_ENV;
+
+        $envTestingPath = base_path('.env.testing');
+        if (file_exists($envTestingPath)) {
+            $lines = file($envTestingPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            foreach ($lines as $line) {
+                if (strpos($line, '=') !== false && !str_starts_with($line, '#')) {
+                    [$key, $value] = explode('=', $line, 2);
+                    $envVars[trim($key)] = trim($value);
+                }
+            }
+        } else {
+            $envVars['APP_ENV'] = 'testing';
+        }
+
+        $process = Process::fromShellCommandline($action->command, base_path(), $envVars);
         $process->start();
 
         if ($this->hasUi) {
